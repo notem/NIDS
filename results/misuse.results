@@ -1,0 +1,201 @@
+Preparing Training and Testing dataset...
+Train: {
+    "Normal": 461368,
+    "TearDrop": 734,
+    "Satan": 4015,
+    "PortSweep": 2371,
+    "WarezClient": 714,
+    "IPSweep": 2978,
+    "Pod": 164,
+    "NMap": 1243,
+    "Neptune": 181782,
+    "Back": 774,
+    "Smurf": 2405
+}
+Test: {
+    "Normal": 115342,
+    "TearDrop": 184,
+    "Satan": 1004,
+    "PortSweep": 593,
+    "WarezClient": 179,
+    "IPSweep": 745,
+    "Pod": 42,
+    "NMap": 311,
+    "Neptune": 45446,
+    "Back": 194,
+    "Smurf": 602
+}
+[Parallel(n_jobs=2)]: Using backend ThreadingBackend with 2 concurrent workers.
+[Parallel(n_jobs=2)]: Done  46 tasks      | elapsed:   37.1s
+[Parallel(n_jobs=2)]: Done  50 out of  50 | elapsed:   39.1s finished
+oob_score =  0.9998435953036073
+Training finished in 49.195440
+[Parallel(n_jobs=2)]: Using backend ThreadingBackend with 2 concurrent workers.
+[Parallel(n_jobs=2)]: Done  46 tasks      | elapsed:    0.8s
+[Parallel(n_jobs=2)]: Done  50 out of  50 | elapsed:    0.9s finished
+Testing finished in 2.133229
+Results: {
+    "Normal": {
+        "Normal": 115335,
+        "IPSweep": 1,
+        "WarezClient": 2,
+        "Neptune": 2,
+        "Satan": 2
+    },
+    "TearDrop": {
+        "Normal": 1,
+        "TearDrop": 183
+    },
+    "Satan": {
+        "Normal": 6,
+        "Satan": 998
+    },
+    "PortSweep": {
+        "Normal": 4,
+        "NMap": 10,
+        "PortSweep": 579
+    },
+    "WarezClient": {
+        "Normal": 2,
+        "WarezClient": 177
+    },
+    "IPSweep": {
+        "IPSweep": 460,
+        "Normal": 4,
+        "NMap": 280,
+        "PortSweep": 1
+    },
+    "Pod": {
+        "Pod": 42
+    },
+    "NMap": {
+        "NMap": 311
+    },
+    "Neptune": {
+        "Normal": 6,
+        "Satan": 22178,
+        "Neptune": 19664,
+        "PortSweep": 3598
+    },
+    "Back": {
+        "Back": 194
+    },
+    "Smurf": {
+        "Normal": 6,
+        "Smurf": 584,
+        "Pod": 11,
+        "TearDrop": 1
+    }
+}
+Metrics: {
+    "Normal": {
+        "TN": 23192,
+        "Accuracy": 0.999740190382714,
+        "FN": 7,
+        "Recall": 0.9999393109188327,
+        "F-Measure": 0.999843957244285,
+        "Precision": 0.9997486217537533,
+        "TP": 115335,
+        "FP": 29
+    },
+    "Pod": {
+        "TN": 138485,
+        "Accuracy": 0.99992059940233,
+        "FN": 0,
+        "Recall": 1.0,
+        "F-Measure": 0.8842105263157894,
+        "Precision": 0.7924528301886793,
+        "TP": 42,
+        "FP": 11
+    },
+    "Satan": {
+        "TN": 137529,
+        "Accuracy": 0.8619526733991649,
+        "FN": 6,
+        "Recall": 0.9940239043824701,
+        "F-Measure": 0.08254073277644529,
+        "Precision": 0.04305807230994909,
+        "TP": 998,
+        "FP": 22180
+    },
+    "PortSweep": {
+        "TN": 137948,
+        "Accuracy": 0.9745813986210778,
+        "FN": 14,
+        "Recall": 0.9763912310286678,
+        "F-Measure": 0.24271641165374136,
+        "Precision": 0.1385830540928674,
+        "TP": 579,
+        "FP": 3599
+    },
+    "Smurf": {
+        "TN": 137943,
+        "Accuracy": 0.9998700783139052,
+        "FN": 18,
+        "Recall": 0.9700996677740864,
+        "F-Measure": 0.984822934232715,
+        "Precision": 1.0,
+        "TP": 584,
+        "FP": 0
+    },
+    "IPSweep": {
+        "TN": 138067,
+        "Accuracy": 0.9979396742380037,
+        "FN": 285,
+        "Recall": 0.6174496644295302,
+        "F-Measure": 0.7628524046434494,
+        "Precision": 0.9978308026030369,
+        "TP": 460,
+        "FP": 1
+    },
+    "WarezClient": {
+        "TN": 138350,
+        "Accuracy": 0.9999711255964369,
+        "FN": 2,
+        "Recall": 0.9888268156424581,
+        "F-Measure": 0.9888268156424582,
+        "Precision": 0.9888268156424581,
+        "TP": 177,
+        "FP": 2
+    },
+    "NMap": {
+        "TN": 138216,
+        "Accuracy": 0.9979109186915147,
+        "FN": 0,
+        "Recall": 1.0,
+        "F-Measure": 0.6820175438596491,
+        "Precision": 0.5174708818635607,
+        "TP": 311,
+        "FP": 290
+    },
+    "TearDrop": {
+        "TN": 138344,
+        "Accuracy": 0.9999855625897827,
+        "FN": 1,
+        "Recall": 0.9945652173913043,
+        "F-Measure": 0.9945652173913043,
+        "Precision": 0.9945652173913043,
+        "TP": 183,
+        "FP": 1
+    },
+    "Back": {
+        "TN": 138333,
+        "Accuracy": 1.0,
+        "FN": 0,
+        "Recall": 1.0,
+        "F-Measure": 1.0,
+        "Precision": 1.0,
+        "TP": 194,
+        "FP": 0
+    },
+    "Neptune": {
+        "TN": 118863,
+        "Accuracy": 0.8430780653760247,
+        "FN": 25782,
+        "Recall": 0.43268934559697225,
+        "F-Measure": 0.6040054060695417,
+        "Precision": 0.9998983016373436,
+        "TP": 19664,
+        "FP": 2
+    }
+}

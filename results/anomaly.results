@@ -1,0 +1,82 @@
+Preparing Training and Testing dataset...
+Train: {
+    "Normal": 461368
+}
+Test: {
+    "Neptune": 227228,
+    "WarezClient": 893,
+    "IPSweep": 3723,
+    "NMap": 1554,
+    "Satan": 5019,
+    "TearDrop": 918,
+    "Normal": 115342,
+    "Smurf": 3007,
+    "Pod": 206,
+    "PortSweep": 2964,
+    "Back": 968
+}
+.........
+Warning: using -h 0 may be faster
+*
+optimization finished, #iter = 9859
+obj = 41711107.841803, rho = 9100.115272
+nSV = 9229, nBSV = 9227
+[LibSVM]
+Training finished in 1892.527965
+Testing finished in 390.334789
+Results: {
+    "Neptune": {
+        "Attack": 226781,
+        "Normal": 447
+    },
+    "WarezClient": {
+        "Normal": 526,
+        "Attack": 367
+    },
+    "IPSweep": {
+        "Attack": 437,
+        "Normal": 3286
+    },
+    "NMap": {
+        "Normal": 1257,
+        "Attack": 297
+    },
+    "Satan": {
+        "Normal": 1814,
+        "Attack": 3205
+    },
+    "TearDrop": {
+        "Normal": 7,
+        "Attack": 911
+    },
+    "Normal": {
+        "Normal": 113168,
+        "Attack": 2174
+    },
+    "Smurf": {
+        "Normal": 595,
+        "Attack": 2412
+    },
+    "Pod": {
+        "Normal": 203,
+        "Attack": 3
+    },
+    "PortSweep": {
+        "Normal": 383,
+        "Attack": 2581
+    },
+    "Back": {
+        "Attack": 955,
+        "Normal": 13
+    }
+}
+Metrics: {
+    "FP": 2174,
+    "FN": 8531,
+    "TN": 237949,
+    "TP": 113168
+    "Precision": 0.9811517053631807,
+    "Recall": 0.9299008208777393,
+    "F-Measure": 0.9548390362848622,
+    "Accuracy": 0.9704136288009021,
+}
