@@ -33,6 +33,6 @@ class Data(object):
         for filename in self.zip.namelist():
             _, label = filename.split('_')
             if target_label is None or target_label == label:
-                with self.zip.open(filename, 'rU') as fi:
+                with self.zip.open(filename, 'r') as fi:
                     X.extend(_read_file(fi))
         return X

@@ -148,40 +148,40 @@ class AlexNet(Classifier):
         self.model = keras.models.Sequential()
         # layer 1 - "filters the 224 x 224 x 3 input image with 96 kernels
         #           of size 11 x 11 x 3 with a stride of 4 pixels"
-        self.model.add(keras.layers.Conv2D(filters=96,
-                                           kernel_size=(11, 11),
+        self.model.add(keras.layers.Conv1D(filters=96,
+                                           kernel_size=11,
                                            strides=4,
                                            input_shape=(input_width,),
                                            activation="relu",
                                            padding="same"))
         self.model.add(keras.layers.BatchNormalization())
-        self.model.add(keras.layers.MaxPool2D(pool_size=(3, 3),
-                                              strides=(2, 2)))
+        self.model.add(keras.layers.MaxPool1D(pool_size=3,
+                                              strides=2))
         # layer 2 - "256 kernels of size 5 x 5 x 48"
-        self.model.add(keras.layers.Conv2D(filters=256,
-                                           kernel_size=(5, 5),
+        self.model.add(keras.layers.Conv1D(filters=256,
+                                           kernel_size=5,
                                            activation="relu",
                                            padding="same"))
         self.model.add(keras.layers.BatchNormalization())
-        self.model.add(keras.layers.MaxPool2D(pool_size=(3, 3),
-                                              strides=(2, 2)))
+        self.model.add(keras.layers.MaxPool1D(pool_size=3,
+                                              strides=2))
         # layer 3 - "384 kernels of size 3 x 3 x 256"
-        self.model.add(keras.layers.Conv2D(filters=384,
-                                           kernel_size=(3, 3),
+        self.model.add(keras.layers.Conv1D(filters=384,
+                                           kernel_size=3,
                                            activation="relu",
                                            padding="same"))
         # layer 4 - "384 kernels of size 3 x 3 x 192"
-        self.model.add(keras.layers.Conv2D(filters=384,
-                                           kernel_size=(3, 3),
+        self.model.add(keras.layers.Conv1D(filters=384,
+                                           kernel_size=3,
                                            activation="relu",
                                            padding="same"))
         # layer 5 - "256 kernels of size 3 x 3 x 192"
-        self.model.add(keras.layers.Conv2D(filters=256,
-                                           kernel_size=(3, 3),
+        self.model.add(keras.layers.Conv1D(filters=256,
+                                           kernel_size=3,
                                            activation="relu",
                                            padding="same"))
-        self.model.add(keras.layers.MaxPool2D(pool_size=(3, 3),
-                                              strides=(2, 2)))
+        self.model.add(keras.layers.MaxPool1D(pool_size=3,
+                                              strides=2))
         # flatten before feeding into FC layers
         self.model.add(keras.layers.Flatten())
         # fully connected layers
