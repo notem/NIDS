@@ -113,11 +113,12 @@ class AlexNet(Classifier):
                                                       histogram_freq=0,
                                                       write_graph=True,
                                                       write_images=True)
-            self.model.fit(x=X_train, y=Y_train,
+            self.model.fit(x=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
+                           y=np.array([np.array(y)[..., np.newaxis] for y in Y_train]),
                            batch_size=self.batch_size,
                            epochs=self.epochs,
                            shuffle=True,
-                           verbose=1,
+                           verbose=2,
                            callbacks=[checkpointer, tensorboard])
         # reload the model
         del self.model
@@ -126,9 +127,9 @@ class AlexNet(Classifier):
 
     def evaluate(self, X_test, Y_test):
         assert self.trained
-        predictions = self.model.predict_classes(x=X_test,
+        predictions = self.model.predict_classes(x=np.array([np.array(x)[..., np.newaxis] for x in X_test]),
                                                  batch_size=self.batch_size,
-                                                 verbose=1)
+                                                 verbose=2)
         results = self.le.inverse_transform(predictions)
         self.cm = confusion_matrix(Y_test, results)
 
@@ -154,7 +155,7 @@ class AlexNet(Classifier):
                                            input_shape=(input_width,),
                                            activation="relu",
                                            padding="same"))
-        self.model.add(keras.layers.BatchNormalization())
+        #self.model.add(keras.layers.BatchNormalization())
         self.model.add(keras.layers.MaxPool1D(pool_size=3,
                                               strides=2))
         # layer 2 - "256 kernels of size 5 x 5 x 48"
@@ -162,7 +163,7 @@ class AlexNet(Classifier):
                                            kernel_size=5,
                                            activation="relu",
                                            padding="same"))
-        self.model.add(keras.layers.BatchNormalization())
+        #self.model.add(keras.layers.BatchNormalization())
         self.model.add(keras.layers.MaxPool1D(pool_size=3,
                                               strides=2))
         # layer 3 - "384 kernels of size 3 x 3 x 256"
@@ -171,15 +172,15 @@ class AlexNet(Classifier):
                                            activation="relu",
                                            padding="same"))
         # layer 4 - "384 kernels of size 3 x 3 x 192"
-        self.model.add(keras.layers.Conv1D(filters=384,
-                                           kernel_size=3,
-                                           activation="relu",
-                                           padding="same"))
+        #self.model.add(keras.layers.Conv1D(filters=384,
+        #                                   kernel_size=3,
+        #                                   activation="relu",
+        #                                   padding="same"))
         # layer 5 - "256 kernels of size 3 x 3 x 192"
-        self.model.add(keras.layers.Conv1D(filters=256,
-                                           kernel_size=3,
-                                           activation="relu",
-                                           padding="same"))
+        #self.model.add(keras.layers.Conv1D(filters=256,
+        #                                   kernel_size=3,
+        #                                   activation="relu",
+        #                                   padding="same"))
         self.model.add(keras.layers.MaxPool1D(pool_size=3,
                                               strides=2))
         # flatten before feeding into FC layers
@@ -189,13 +190,13 @@ class AlexNet(Classifier):
         # "We use dropout in the first two fully-connected layers..."
         self.model.add(keras.layers.Dense(units=4096))  # layer 6
         self.model.add(keras.layers.Dropout(0.5))
-        self.model.add(keras.layers.Dense(units=4096))  # layer 7
-        self.model.add(keras.layers.Dropout(0.5))
+        #self.model.add(keras.layers.Dense(units=4096))  # layer 7
+        #self.model.add(keras.layers.Dropout(0.5))
         self.model.add(keras.layers.Dense(units=class_count))  # layer 8
         # output layer is softmax
         self.model.add(keras.layers.Activation('softmax'))
         # compile the model with crossentropy loss and SGD
-        self.model.compile(loss="categorical_crossentropy",
+        self.model.compile(loss="sparse_categorical_crossentropy",
                            optimizer=keras.optimizers.SGD(lr=0.02, momentum=0.9, decay=0.0005),
                            metrics=['accuracy'])
 
@@ -221,12 +222,13 @@ class AutoEncoder(Classifier):
                                                       histogram_freq=0,
                                                       write_graph=True,
                                                       write_images=True)
-            self.model.fit(x=X_train, y=X_train,
+            self.model.fit(x=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
+                           y=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
                            epochs=self.epochs,
                            batch_size=self.batch_size,
                            shuffle=True,
                            validation_split=0.1,
-                           verbose=1,
+                           verbose=2,
                            callbacks=[checkpointer, tensorboard])
         # reload the best model
         del self.model
@@ -235,7 +237,7 @@ class AutoEncoder(Classifier):
 
     def evaluate(self, X_test, Y_test):
         assert self.trained
-        predictions = self.model.predict(x=X_test,
+        predictions = self.model.predict(x=np.array([np.array(x)[..., np.newaxis] for x in X_test]),
                                          batch_size=self.batch_size,
                                          verbose=1)
         mse = np.mean(np.power(X_test - predictions, 2), axis=1)
