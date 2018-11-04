@@ -95,7 +95,7 @@ class AlexNet(Classifier):
     epochs = 100
     le = None
     cm = None
-    model_path = "models/alexnet.h5"
+    model_path = os.path.join("models", "alexnet.h5")
 
     def train(self, X_train, Y_train):
         if not os.path.exists(self.model_path):
@@ -115,7 +115,7 @@ class AlexNet(Classifier):
                                                       write_images=True)
             early_stopping = keras.callbacks.EarlyStopping(monitor="loss",
                                                            min_delta=0,
-                                                           patience=3,
+                                                           patience=2,
                                                            verbose=0,
                                                            mode='auto')
             self.model.fit(x=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
@@ -157,7 +157,7 @@ class AlexNet(Classifier):
         self.model.add(keras.layers.Conv1D(filters=96,
                                            kernel_size=11,
                                            strides=4,
-                                           input_shape=(input_width,),
+                                           input_shape=(input_width,1),
                                            activation="relu",
                                            padding="same"))
         #self.model.add(keras.layers.BatchNormalization())
@@ -213,7 +213,7 @@ class AutoEncoder(Classifier):
     epochs = 100
     batch_size = 32
     threshold = 2.0
-    model_path = "models/autoencoder.h5"
+    model_path = os.path.join("models", "autoencoder.h5")
 
     def train(self, X_train, Y_train):
         if not os.path.exists(self.model_path):
