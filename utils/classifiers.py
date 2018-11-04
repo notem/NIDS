@@ -107,8 +107,9 @@ class AlexNet(Classifier):
 
             # save best model and logs for tensorboard
             checkpointer = keras.callbacks.ModelCheckpoint(filepath=self.model_path,
-                                                           verbose=0,
-                                                           save_best_only=True)
+                                                           verbose=1,
+                                                           save_best_only=True,
+                                                           monitor='acc')
             tensorboard = keras.callbacks.TensorBoard(log_dir='logs',
                                                       histogram_freq=0,
                                                       write_graph=True,
@@ -123,7 +124,7 @@ class AlexNet(Classifier):
                            batch_size=self.batch_size,
                            epochs=self.epochs,
                            shuffle=True,
-                           verbose=1,
+                           verbose=2,
                            callbacks=[early_stopping, checkpointer, tensorboard])
         # reload the model
         del self.model
@@ -134,7 +135,7 @@ class AlexNet(Classifier):
         assert self.trained
         predictions = self.model.predict_classes(x=np.array([np.array(x)[..., np.newaxis] for x in X_test]),
                                                  batch_size=self.batch_size,
-                                                 verbose=1)
+                                                 verbose=2)
         results = self.le.inverse_transform(predictions)
         self.cm = confusion_matrix(Y_test, results)
 
@@ -221,8 +222,9 @@ class AutoEncoder(Classifier):
 
             # save best model and logs for tensorboard
             checkpointer = keras.callbacks.ModelCheckpoint(filepath=self.model_path,
-                                                           verbose=0,
-                                                           save_best_only=True)
+                                                           verbose=1,
+                                                           save_best_only=True,
+                                                           monitor='val_acc')
             tensorboard = keras.callbacks.TensorBoard(log_dir='logs',
                                                       histogram_freq=0,
                                                       write_graph=True,
