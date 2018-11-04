@@ -113,13 +113,18 @@ class AlexNet(Classifier):
                                                       histogram_freq=0,
                                                       write_graph=True,
                                                       write_images=True)
+            early_stopping = keras.callbacks.EarlyStopping(monitor="loss",
+                                                           min_delta=0,
+                                                           patience=3,
+                                                           verbose=0,
+                                                           mode='auto')
             self.model.fit(x=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
                            y=np.array([np.array(y)[..., np.newaxis] for y in Y_train]),
                            batch_size=self.batch_size,
                            epochs=self.epochs,
                            shuffle=True,
-                           verbose=2,
-                           callbacks=[checkpointer, tensorboard])
+                           verbose=1,
+                           callbacks=[early_stopping, checkpointer, tensorboard])
         # reload the model
         del self.model
         self.model = keras.models.load_model(self.model_path)
@@ -129,7 +134,7 @@ class AlexNet(Classifier):
         assert self.trained
         predictions = self.model.predict_classes(x=np.array([np.array(x)[..., np.newaxis] for x in X_test]),
                                                  batch_size=self.batch_size,
-                                                 verbose=2)
+                                                 verbose=1)
         results = self.le.inverse_transform(predictions)
         self.cm = confusion_matrix(Y_test, results)
 
@@ -167,10 +172,10 @@ class AlexNet(Classifier):
         self.model.add(keras.layers.MaxPool1D(pool_size=3,
                                               strides=2))
         # layer 3 - "384 kernels of size 3 x 3 x 256"
-        self.model.add(keras.layers.Conv1D(filters=384,
-                                           kernel_size=3,
-                                           activation="relu",
-                                           padding="same"))
+        #self.model.add(keras.layers.Conv1D(filters=384,
+        #                                   kernel_size=3,
+        #                                   activation="relu",
+        #                                   padding="same"))
         # layer 4 - "384 kernels of size 3 x 3 x 192"
         #self.model.add(keras.layers.Conv1D(filters=384,
         #                                   kernel_size=3,
@@ -181,8 +186,8 @@ class AlexNet(Classifier):
         #                                   kernel_size=3,
         #                                   activation="relu",
         #                                   padding="same"))
-        self.model.add(keras.layers.MaxPool1D(pool_size=3,
-                                              strides=2))
+        #self.model.add(keras.layers.MaxPool1D(pool_size=3,
+        #                                      strides=2))
         # flatten before feeding into FC layers
         self.model.add(keras.layers.Flatten())
         # fully connected layers
@@ -222,6 +227,11 @@ class AutoEncoder(Classifier):
                                                       histogram_freq=0,
                                                       write_graph=True,
                                                       write_images=True)
+            early_stopping = keras.callbacks.EarlyStopping(monitor="val_loss",
+                                                           min_delta=0,
+                                                           patience=3,
+                                                           verbose=0,
+                                                           mode='auto')
             self.model.fit(x=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
                            y=np.array([np.array(x)[..., np.newaxis] for x in X_train]),
                            epochs=self.epochs,
@@ -229,7 +239,7 @@ class AutoEncoder(Classifier):
                            shuffle=True,
                            validation_split=0.1,
                            verbose=2,
-                           callbacks=[checkpointer, tensorboard])
+                           callbacks=[early_stopping, checkpointer, tensorboard])
         # reload the best model
         del self.model
         self.model = keras.models.load_model(self.model_path)
