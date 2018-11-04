@@ -1,5 +1,5 @@
 from utils.data import Data
-from utils.classifiers import RandomForest, SVM
+from utils.classifiers import RandomForest, SVM, AlexNet, AutoEncoder
 import itertools
 import numpy as np
 import matplotlib.pyplot as plt
@@ -79,9 +79,14 @@ def prepare_dataset(data, mode, minimum_instances=100, split=0.8, max_instances=
     return tr_data, tr_labels, ts_data, ts_labels
 
 
-def misuse(tr_data, tr_labels, ts_data, ts_labels):
+def misuse(style, tr_data, tr_labels, ts_data, ts_labels):
     """Run the misuse IDS classifier experiment """
-    classifier = RandomForest()
+    classifier = None
+    if style == "neural":
+        classifier = AlexNet()
+    elif style == "classic":
+        classifier = RandomForest()
+    assert(classifier is not None)
 
     train_start = time.time()
     classifier.train(tr_data, tr_labels)
@@ -120,9 +125,14 @@ def misuse(tr_data, tr_labels, ts_data, ts_labels):
     plt.show()
 
 
-def anomaly(tr_data, tr_labels, ts_data, ts_labels):
+def anomaly(style, tr_data, tr_labels, ts_data, ts_labels):
     """Run the anomaly IDS classifier experiment """
-    classifier = SVM()
+    classifier = None
+    if style == "neural":
+        classifier = AutoEncoder()
+    elif style == "classic":
+        classifier = SVM()
+    assert(classifier is not None)
 
     train_start = time.time()
     classifier.train(tr_data, tr_labels)
@@ -190,6 +200,7 @@ if __name__ == "__main__":
     # parse argument(s)
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', type=str, required=True)
+    parser.add_argument('--style', choices=['classic', 'neural'], required=True)
     args = parser.parse_args()
 
     # load data zip
@@ -198,7 +209,7 @@ if __name__ == "__main__":
     assert ("Normal" in data.get_labels())
 
     if args.mode == 'anomaly':
-        anomaly(*prepare_dataset(data, args.mode))
+        anomaly(args.style, *prepare_dataset(data, args.mode))
 
     elif args.mode == 'misuse':
-        misuse(*prepare_dataset(data, args.mode))
+        misuse(args.style, *prepare_dataset(data, args.mode))

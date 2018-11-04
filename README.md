@@ -7,5 +7,9 @@
     2. Install other required python packages
         * ``# pip install -r requirements.txt``
 3. Run the IDS classifier
-    * ``python3 main.py --mode misuse``
-    * ``python3 main.py --mode anomaly``
+    1. Using classic machine learning techniques
+        * ``python3 main.py --mode misuse --style classic``
+        * ``python3 main.py --mode anomaly --style classic``
+    2. Using deep learning techniques
+        * ``python3 main.py --mode misuse --style neural``
+        * ``python3 main.py --mode anomaly --style neural``
